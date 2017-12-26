@@ -1,7 +1,4 @@
 
-//============VARIABLES========//
-
-
 var triviaQuestions = [
     {question: "Which country won the 2012 UEFA European Championship?",
     choices: ["Italy","Germany","Spain","England"],
@@ -26,37 +23,37 @@ var triviaQuestions = [
 ]
 
 var time;
-var correctAnswers;
-var wrongAnswers;
+var correctAnswer;
+var incorrectAnswer;
 var unAnswered;
 var answered;
 var currentQuestion;
 var userChoice;
-var seconds
+var seconds;
 
-var gifArray = ["gif1","gif2","gif3","gif4"];
+var gifArray = ["gif1","gif2","gif3","gif4","gif5"];
 
 //==================FUNCTIONS=============//
 
 
 // Start The game by using onclick event//
-$('#startBtn').on('click', function(){
-	$(this).hide();
-	newGame();
+$("#start").on("click", function(){
+        $("#start").hide();
+        newGame();
 });
 
-$('#startOverBtn').on('click', function(){
-	$(this).hide();
-	newGame();
+$("#startOverBtn").on("click", function(){
+    $("#startOverBtn").hide();
+    newGame();
 });
 
 function newGame(){
     $("#finalMessage").empty();
     $("#correctAnswers").empty();
-    $("#wrongAnswers").empty();
+    $("#incorrectAnswers").empty();
     $("#unAnswered").empty();
-    correctAnswers= 0;
-    wrongAnswers=0;
+    correctAnswer= 0;
+    incorrectAnswer=0;
     unAnswered=0;
     currentQuestion=0;
     newQuestion();
@@ -69,35 +66,36 @@ function newQuestion(){
 	answered = true;
 	
 	
-	$('#currentQuestion').html('Question #'+(currentQuestion+1)+'/'+triviaQuestions.length);
-	$('.question').html('<h2>' + triviaQuestions[currentQuestion].question + '</h2>');
+	$('#currentQuestion').html('Question Number: '+(currentQuestion+1)+'/'+triviaQuestions.length);
+	$('#question').html('<h2>' + triviaQuestions[currentQuestion].question + '</h2>');
 	for(var i = 0; i < 4; i++){
-		var choices = $('<div>');
-		choices.text(triviaQuestions[currentQuestion].answerList[i]);
-		choices.attr({'data-index': i });
-		choices.addClass('thisOption');
-		$('#choices').append(options);
+		var theOptions = $('<div>');
+		theOptions.text(triviaQuestions[currentQuestion].choices[i]);
+		theOptions.attr('data-index', i );
+		theOptions.addClass('thisOptions');
+		$('#choices').append(theOptions);
 	}
     countdown();
     
-	$('.thisChoice').on('click',function(){
-		userSelect = $(this).data('index');
+	$(".thisOptions").on('click',function(){
+		userChoice = $(this).data("index");
 		clearInterval(time);
 		answerPage();
 	});
 }
 
 function countdown(){
+    
+    var seconds = 20;
+    $("#remainingTime").html("<h3>Time Remaining: " + seconds + "</h3>");
     answered = true;
-    seconds = 20;
-    $("#time").html("<h3>Time Remaining: " + seconds + "</h3>");
     time = setInterval(showCountdown, 1000);
 }
 
 function showCountdown(){
-    time--;
-    $("#time").html("<h3>Time Remaining: " + time + "</h3>");
-    if(time<1){
+    seconds--;
+    $("#remainingTime").html("<h3>Time Remaining: " + seconds + "</h3>");
+    if(seconds < 1){
         clearInterval(time);
         answered=false;
         answerPage();
@@ -107,28 +105,28 @@ function showCountdown(){
 function answerPage(){
 
     $("#currentQuestion").empty();
-    $("#theOptions").empty();
-    $("question").empty();
+    $(".thisOptions").empty();
+    $("#question").empty();
 
     var correctAnswerText = triviaQuestions[currentQuestion].choices[triviaQuestions[currentQuestion].answer];
     var correctAnswerIndex = triviaQuestions[currentQuestion].answer;
     $('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
     
     if ((userChoice == correctAnswerIndex) && (answered == true)){
-        correctAnswers++;
+        correctAnswer++;
         $("#message").text("Yes, that's right!");
     }
         else if((userChoice!=correctAnswerIndex)&&(answered==true)){
-            wrongAnswers++;
+            incorrectAnswer++;
             $("#message").text("No, that is not correct!");
-            $('#rightAnswer').html('The correct answer was: ' + rightAnswerText);
+            $('#rightAnswer').html('The correct answer was: ' + correctAnswerText);
             answered=true;
         }
 
         else{
             unAnswered++;
             $('#message').text("You didn't answer the question!");
-            $('#rightAnswer').html('The correct answer was: ' + rightAnswerText);
+            $('#rightAnswer').html('The correct answer was: ' + correctAnswerText);
             answered=true;
         }
 
@@ -143,15 +141,18 @@ function answerPage(){
 }
 
 function scoreboard(){
-	$("#time").empty();
+	$("#remainingTime").empty();
 	$("#message").empty();
 	$("#rightAnswer").empty();
 	$("#gif").empty();
 
-	$("#finalMessage").html(messages.finished);
+	$("#finalMessage").html("Here is your final score!!!");
 	$("#correctAnswers").html("Correct Answers: " + correctAnswer);
 	$("#incorrectAnswers").html("Incorrect Answers: " + incorrectAnswer);
 	$("#unanswered").html("Unanswered: " + unanswered);
 	$("#startOverBtn").addClass("reset");
 	$("#startOverBtn").show();
-	$("#startOverBtn").html("Start Over?")
+	$("#startOverBtn").html("Start Over?");
+}
+
+
