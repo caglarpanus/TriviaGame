@@ -1,0 +1,27 @@
+body{
+    background-image: url("../images/background.jpeg");
+    font-family: 'Pangolin', cursive;
+}
+
+.container{
+    background-color: burlywood;
+    width: 80%;
+    margin: auto;
+    height: 680px;
+    text-align: center;
+}
+
+h1{
+    color: rgb(99, 25, 25);
+    font-size: 50px;
+}
+
+#startbtn{
+    width: 50%;
+    height: 50px;
+    background-color: palevioletred;
+    border-color: navy;
+    font-size: 30px;
+    margin-top: 200px;
+
+}
