@@ -63,9 +63,9 @@ function newQuestion(){
 	$('#message').empty();
 	$('#rightAnswer').empty();
 	$('#gif').empty();
-	answered = true;
-	
-	
+    answered = true;
+    seconds=20;
+	//Question  will be asked in a loop, and answers will be added.
 	$('#currentQuestion').html('Question Number: '+(currentQuestion+1) +' of '+triviaQuestions.length);
 	$('#question').html('<h2>' + triviaQuestions[currentQuestion].question + '</h2>');
 	for(var i = 0; i < 4; i++){
@@ -112,7 +112,7 @@ function answerPage(){
     var correctAnswerText = triviaQuestions[currentQuestion].choices[triviaQuestions[currentQuestion].answer];
     var correctAnswerIndex = triviaQuestions[currentQuestion].answer;
     $('#gif').html('<img src = "assets/images/'+ gifArray[currentQuestion] +'.gif" width = "400px">');
-    
+    // if it is correct, incorrect, or unanswered question
     if ((userChoice == correctAnswerIndex) && (answered == true)){
         correctAnswer++;
         $("#message").text("Yes, that's right!");
@@ -120,14 +120,14 @@ function answerPage(){
         else if((userChoice!=correctAnswerIndex)&&(answered==true)){
             incorrectAnswer++;
             $("#message").text("No, that is not correct!");
-            $('#rightAnswer').html('The correct answer was: ' + correctAnswerText);
+            $('#rightAnswer').html('The correct answer is: ' + correctAnswerText);
             answered=true;
         }
 
         else{
             unAnswered++;
             $('#message').text("You didn't answer the question!");
-            $('#rightAnswer').html('The correct answer was: ' + correctAnswerText);
+            $('#rightAnswer').html('The correct answer is: ' + correctAnswerText);
             answered=false;
         }
 
