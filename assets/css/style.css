@@ -32,3 +32,31 @@ h1{
     margin: auto;
     width: 50%;
 }
+
+.reset{
+    width: 50%;
+    height: 50px;
+    background-color: palevioletred;
+    border-color: navy;
+    font-size: 30px;
+    margin: auto;
+    margin-top: 200px;
+    text-align: center;
+}
+
+#finalMessage{
+    color: red;
+    font-size: 100px;
+}
+
+#correctAnswers,#incorrectAnswers,#unAnswered{
+    font-size: 30px;
+}
+
+@media screen and (max-width:640px){
+	.container{
+		width: 500px;
+		margin-top: 200px;
+		size: 200%;
+	}	
+}

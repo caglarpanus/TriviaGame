@@ -29,7 +29,7 @@ var unAnswered;
 var answered;
 var currentQuestion;
 var userChoice;
-var seconds;
+var seconds=20;
 
 var gifArray = ["gif1","gif2","gif3","gif4","gif5"];
 
@@ -66,27 +66,27 @@ function newQuestion(){
 	answered = true;
 	
 	
-	$('#currentQuestion').html('Question Number: '+(currentQuestion+1)+'/'+triviaQuestions.length);
+	$('#currentQuestion').html('Question Number: '+(currentQuestion+1) +' of '+triviaQuestions.length);
 	$('#question').html('<h2>' + triviaQuestions[currentQuestion].question + '</h2>');
 	for(var i = 0; i < 4; i++){
 		var theOptions = $('<div>');
 		theOptions.text(triviaQuestions[currentQuestion].choices[i]);
 		theOptions.attr('data-index', i );
 		theOptions.addClass('thisOptions');
-		$('#choices').append(theOptions);
+        $('#choices').append(theOptions);
+        
 	}
     countdown();
-    
+   // stop the time when user make a choice  
 	$(".thisOptions").on('click',function(){
-		userChoice = $(this).data("index");
-		clearInterval(time);
+        userChoice = $(this).data("index");
+        clearInterval(time);
 		answerPage();
-	});
+    });
 }
-
+// set time to go down every 1 second
 function countdown(){
     
-    var seconds = 20;
     $("#remainingTime").html("<h3>Time Remaining: " + seconds + "</h3>");
     answered = true;
     time = setInterval(showCountdown, 1000);
@@ -96,6 +96,7 @@ function showCountdown(){
     seconds--;
     $("#remainingTime").html("<h3>Time Remaining: " + seconds + "</h3>");
     if(seconds < 1){
+
         clearInterval(time);
         answered=false;
         answerPage();
@@ -127,15 +128,15 @@ function answerPage(){
             unAnswered++;
             $('#message').text("You didn't answer the question!");
             $('#rightAnswer').html('The correct answer was: ' + correctAnswerText);
-            answered=true;
+            answered=false;
         }
 
         if(currentQuestion==(triviaQuestions.length-1)){
-            setTimeout(scoreBoard,5000);
+            setTimeout(scoreboard,3000);
         }
         else{
             currentQuestion++;
-            setTimeout(newQuestion,5000);
+            setTimeout(newQuestion,3000);
         }
 
 }
@@ -149,7 +150,7 @@ function scoreboard(){
 	$("#finalMessage").html("Here is your final score!!!");
 	$("#correctAnswers").html("Correct Answers: " + correctAnswer);
 	$("#incorrectAnswers").html("Incorrect Answers: " + incorrectAnswer);
-	$("#unanswered").html("Unanswered: " + unanswered);
+	$("#unAnswered").html("Unanswered: " + unAnswered);
 	$("#startOverBtn").addClass("reset");
 	$("#startOverBtn").show();
 	$("#startOverBtn").html("Start Over?");
